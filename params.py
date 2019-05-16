@@ -36,6 +36,7 @@ def parse_args():
     parser.add_argument('--n_init_ex', type=int, default=5000)
     parser.add_argument('--n_ft_ex', type=int, default=7500)
     parser.add_argument('--n_eval_ex', type=int, default=20000)
+    parser.add_argument('--n_processes', type=int, default=1)
     parser.add_argument('--method', type=str, choices=["nn", "csls_knn_10"], default="csls_knn_10")
     parser.add_argument('--cp_dir', type=str, default="output")
 

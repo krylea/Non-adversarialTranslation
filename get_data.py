@@ -25,7 +25,6 @@ def parse_args():
 
 params = parse_args()
 
-
 src_path = os.path.join(vec_dir, 'wiki.{}.vec'.format(params.src_lang))
 tgt_path = os.path.join(vec_dir, 'wiki.{}.vec'.format(params.tgt_lang))
 for l, p in [(params.src_lang, src_path), (params.tgt_lang, tgt_path)]:
