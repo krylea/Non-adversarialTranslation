@@ -167,7 +167,7 @@ def procrustes(src_emb, tgt_emb, mapping, iters, dico=None):
     return mapping, dico
 
 def joint_refinement(src_emb, tgt_emb, s2t_mapping, t2s_mapping, iters):
-    s2t, t2s, joint_s2t, joint_t2s = build_dictionary(src_emb, tgt_emb, (s2t_mapping, t2s_mapping), iters)
+    s2t, t2s, joint_s2t, joint_t2s = build_dictionary(src_emb, tgt_emb, (s2t_mapping, t2s_mapping), "joint")
 
     proc_s2t_map, proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters, dico=s2t)
     proc_t2s_map, proc_t2s_dico = procrustes(tgt_emb, src_emb, t2s_mapping, iters, dico=t2s)
