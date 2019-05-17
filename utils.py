@@ -98,7 +98,7 @@ def get_nn_avg_dist(emb, query, knn):
     return distances.mean(1)
 
 
-def get_word_translation_accuracy(lang1, word2id1, emb1, lang2, word2id2, emb2, method, dico):
+def get_word_translation_accuracy(emb1, emb2, method, dico):
     """
     Given source and target word embeddings, and a dictionary,
     evaluate the translation accuracy using the precision@k.
