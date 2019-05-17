@@ -80,10 +80,10 @@ def _build_dictionary(src_emb, tgt_emb, mode, s2t_candidates=None, t2s_candidate
 
     if s2t:
         if s2t_candidates is None:
-            s2t_candidates = get_candidates(src_emb, tgt_emb, **kwargs)
+            s2t_candidates = _get_candidates(src_emb, tgt_emb, **kwargs)
     if t2s:
         if t2s_candidates is None:
-            t2s_candidates = get_candidates(tgt_emb, src_emb, **kwargs)
+            t2s_candidates = _get_candidates(tgt_emb, src_emb, **kwargs)
         t2s_candidates = torch.cat([t2s_candidates[:, 1:], t2s_candidates[:, :1]], 1)
 
     if mode == 'S2T':
@@ -202,7 +202,7 @@ def load_data(src_lang, tgt_lang, n_eval_ex=20000):
                                        tgt_word2id)
     t2s_dict = utils.load_dictionary('data/%s-%s.5000-6500.txt' % (tgt_lang, src_lang), tgt_word2id,
                                      src_word2id)
-    return (src_id2word, src_word2id, src_embeddings), (tgt_id2word, tgt_word2id, tgt_embeddings), s2t_dict, t2s_dict
+    return src_embeddings, tgt_embeddings, s2t_dict, t2s_dict
 
 def evaluate(T_s2t, T_t2s, src_emb, tgt_emb, s2t_dict, t2s_dict):
     TranslatedX = src_emb.dot(np.transpose(T_s2t))
