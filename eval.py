@@ -8,8 +8,22 @@
 
 import numpy as np
 import utils
-import params
 
+import argparse
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--src_lang', type=str, default="en")
+    parser.add_argument('--tgt_lang', type=str, default="es")
+    parser.add_argument('--n_eval_ex', type=int, default=20000)
+    parser.add_argument('--method', type=str, choices=["nn", "csls_knn_10"], default="csls_knn_10")
+    parser.add_argument('--cp_dir', type=str, default="output")
+
+    args = parser.parse_args()
+    return args
+
+params = parse_args()
 
 src_id2word, src_word2id, src_embeddings = utils.read_txt_embeddings('data/wiki.%s.vec' % params.src_lang, params.n_eval_ex, False)
 tgt_id2word, tgt_word2id, tgt_embeddings = utils.read_txt_embeddings('data/wiki.%s.vec' % params.tgt_lang, params.n_eval_ex, False)
