@@ -116,7 +116,7 @@ def build_dictionary(src_emb, tgt_emb, mapping, mode, bs=64, max_rank=15000, thr
 
     if mode == 'S2T':
         mapping = torch.Tensor(mapping)
-        s2t_vecs = src_emb.mm(mapping.t()).chunk(2, -1)[0].data
+        s2t_vecs = src_emb.mm(mapping.t())
         tgt_vecs = tgt_emb.data
         s2t_vecs = s2t_vecs / s2t_vecs.norm(2, 1, keepdim=True).expand_as(s2t_vecs)
         tgt_vecs = tgt_vecs / tgt_vecs.norm(2, 1, keepdim=True).expand_as(tgt_vecs)
@@ -124,7 +124,7 @@ def build_dictionary(src_emb, tgt_emb, mapping, mode, bs=64, max_rank=15000, thr
         return s2t_dico
     elif mode == 'T2S':
         mapping = torch.Tensor(mapping)
-        t2s_vecs = tgt_emb.mm(mapping.t()).chunk(2, -1)[0].data
+        t2s_vecs = tgt_emb.mm(mapping.t())
         src_vecs = src_emb.data
         t2s_vecs = t2s_vecs / t2s_vecs.norm(2, 1, keepdim=True).expand_as(t2s_vecs)
         src_vecs = src_vecs / src_vecs.norm(2, 1, keepdim=True).expand_as(src_vecs)
