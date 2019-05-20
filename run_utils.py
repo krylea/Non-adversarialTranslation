@@ -112,7 +112,7 @@ def build_dictionary(src_emb, tgt_emb, mapping, mode, bs=64, max_rank=15000, thr
     Build a dictionary from aligned embeddings.
     """
     dico_kwargs = {'max_rank': max_rank, 'threshold': threshold}
-    src_emb, tgt_emb = torch.Tensor(src_emb), torch.Tensor(tgt_emb)
+
 
     if mode == 'S2T':
         mapping = torch.Tensor(mapping)
@@ -169,6 +169,9 @@ def procrustes(src_emb, tgt_emb, mapping, iters, dico=None):
     return mapping, dico
 
 def joint_refinement(src_emb, tgt_emb, s2t_mapping, t2s_mapping, iters):
+    src_emb, tgt_emb, s2t_mapping, t2s_mapping = [torch.Tensor(x).cuda() if USE_CUDA else torch.Tensor(x)
+                                                  for x in (src_emb, tgt_emb, s2t_mapping, t2s_mapping)]
+
     s2t, t2s, joint_s2t, joint_t2s = build_dictionary(src_emb, tgt_emb, (s2t_mapping, t2s_mapping), "joint")
 
     proc_s2t_map, proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters, dico=s2t)
