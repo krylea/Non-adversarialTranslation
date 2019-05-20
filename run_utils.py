@@ -156,7 +156,7 @@ def _procrustes(src_emb, tgt_emb, mapping, pairs):
     U, S, V = torch.svd(M)
     #scipy.linalg.svd(M, full_matrices=True)
 
-    return (U.mm(V.t()).type_as(W)).numpy()
+    return (U.mm(V.t()).type_as(W))#.numpy()
 
 def procrustes(src_emb, tgt_emb, mapping, iters, dico=None):
     dico = build_dictionary(src_emb, tgt_emb, mapping, "S2T") if dico is None else dico
