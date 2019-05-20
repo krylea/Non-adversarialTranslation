@@ -179,7 +179,7 @@ def joint_refinement(src_emb, tgt_emb, s2t_mapping, t2s_mapping, iters):
 
     joint_proc_s2t_map, joint_proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters, dico=joint_s2t)
     joint_proc_t2s_map, joint_proc_t2s_dico = procrustes(tgt_emb, src_emb, t2s_mapping, iters, dico=joint_t2s)
-    joint_s2t_nn, joint_s2t_csls, joint_t2s_nn, joint_t2s_csls = evaluate(proc_s2t_map, proc_t2s_map, src_emb, tgt_emb,
+    joint_s2t_nn, joint_s2t_csls, joint_t2s_nn, joint_t2s_csls = evaluate(joint_proc_s2t_map, joint_proc_t2s_map, src_emb, tgt_emb,
                                                                           joint_proc_s2t_dico, joint_proc_t2s_dico)
     del joint_proc_s2t_map, joint_proc_s2t_dico, joint_proc_t2s_map, joint_proc_t2s_dico
 
