@@ -50,15 +50,15 @@ def _run_icp(src_W, tgt_W, s0, i, n_pca, init_epochs):
 
 def train_model(src_lang, tgt_lang, src_W, tgt_W, n_runs, n_pca, n_processes,
                 init_epochs, train_epochs, ft_epochs, n_ft, min_rec=1e8, min_bb=None):
-    data = np.zeros((params.n_runs, 2))
+    data = np.zeros((n_runs, 2))
 
     best_idx_x = None
     best_idx_y = None
 
     s0 = np.random.randint(50000)
     results = []
-    if params.n_processes == 1:
-        for i in range(params.n_runs):
+    if n_processes == 1:
+        for i in range(n_runs):
             results += [_run_icp(src_W, tgt_W, s0, i, n_pca, init_epochs)]
     else:
         pool = multiprocessing.Pool(processes=n_processes)
