@@ -156,7 +156,7 @@ def _procrustes(src_emb, tgt_emb, mapping, pairs):
     U, S, V = torch.svd(M)
     #scipy.linalg.svd(M, full_matrices=True)
 
-    return (U.mm(V.t()).type_as(W))#.numpy()
+    return (U.mm(V.t()).type_as(W))
 
 def procrustes(src_emb, tgt_emb, mapping, iters, dico=None):
     dico = build_dictionary(src_emb, tgt_emb, mapping, "S2T") if dico is None else dico
@@ -207,6 +207,8 @@ def load_data(src_lang, tgt_lang, n_eval_ex=20000):
     return src_embeddings, tgt_embeddings, s2t_dict, t2s_dict
 
 def evaluate(T_s2t, T_t2s, src_emb, tgt_emb, s2t_dict, t2s_dict):
+    src_emb, tgt_emb, s2t_mapping, t2s_mapping = [x.cpu().numpy() if isinstance(x, torch.Tensor) else x for x in
+                                                  (src_emb, tgt_emb, s2t_dict, t2s_dict, T_s2t, T_t2s) ]
     TranslatedX = src_emb.dot(np.transpose(T_s2t))
     TranslatedY = tgt_emb.dot(np.transpose(T_t2s))
 
