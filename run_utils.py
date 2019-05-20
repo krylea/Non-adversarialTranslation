@@ -172,10 +172,9 @@ def joint_refinement(src_emb, tgt_emb, s2t_mapping, t2s_mapping, iters):
     src_emb, tgt_emb, s2t_mapping, t2s_mapping = [torch.Tensor(x).cuda() if USE_CUDA else torch.Tensor(x)
                                                   for x in (src_emb, tgt_emb, s2t_mapping, t2s_mapping)]
 
-    #s2t, t2s, joint_s2t, joint_t2s = build_dictionary(src_emb, tgt_emb, (s2t_mapping, t2s_mapping), "joint")
+    s2t, t2s, joint_s2t, joint_t2s = build_dictionary(src_emb, tgt_emb, (s2t_mapping, t2s_mapping), "joint")
 
-    proc_s2t_map, proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters)#, dico=s2t)
-    '''
+    proc_s2t_map, proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters, dico=s2t)
     proc_t2s_map, proc_t2s_dico = procrustes(tgt_emb, src_emb, t2s_mapping, iters, dico=t2s)
     s2t_nn, s2t_csls, t2s_nn, t2s_csls = evaluate(proc_s2t_map, proc_t2s_map, src_emb, tgt_emb, proc_s2t_dico,
                                                   proc_t2s_dico)
@@ -186,13 +185,10 @@ def joint_refinement(src_emb, tgt_emb, s2t_mapping, t2s_mapping, iters):
     joint_s2t_nn, joint_s2t_csls, joint_t2s_nn, joint_t2s_csls = evaluate(proc_s2t_map, proc_t2s_map, src_emb, tgt_emb,
                                                                           joint_proc_s2t_dico, joint_proc_t2s_dico)
     del joint_proc_s2t_map, joint_proc_s2t_dico, joint_proc_t2s_map, joint_proc_t2s_dico
-    
 
     return {"s2t_nn": s2t_nn, "s2t_csls":s2t_csls, "t2s_nn": t2s_nn, "t2s_csls": t2s_csls,
             "joint_s2t_nn": joint_s2t_nn, "joint_s2t_csls": joint_s2t_csls,
             "joint_t2s_nn": joint_t2s_nn, "joint_t2s_csls": joint_t2s_csls}
-    '''
-    raise Exception("yay")
 
 
 
