@@ -173,19 +173,17 @@ def joint_refinement(src_emb, tgt_emb, s2t_mapping, t2s_mapping, s2t_pairs, t2s_
 
     proc_s2t_map, proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters, dico=s2t)
     proc_t2s_map, proc_t2s_dico = procrustes(tgt_emb, src_emb, t2s_mapping, iters, dico=t2s)
-    s2t_nn, s2t_csls, t2s_nn, t2s_csls = evaluate(proc_s2t_map, proc_t2s_map, src_emb, tgt_emb, s2t_pairs,
+    proc_out = evaluate(proc_s2t_map, proc_t2s_map, src_emb, tgt_emb, s2t_pairs,
                                                   t2s_pairs)
     del proc_s2t_map,proc_s2t_dico,proc_t2s_map,proc_t2s_dico
 
     joint_proc_s2t_map, joint_proc_s2t_dico = procrustes(src_emb, tgt_emb, s2t_mapping, iters, dico=joint_s2t)
     joint_proc_t2s_map, joint_proc_t2s_dico = procrustes(tgt_emb, src_emb, t2s_mapping, iters, dico=joint_t2s)
-    joint_s2t_nn, joint_s2t_csls, joint_t2s_nn, joint_t2s_csls = evaluate(joint_proc_s2t_map, joint_proc_t2s_map, src_emb, tgt_emb,
+    joint_out = evaluate(joint_proc_s2t_map, joint_proc_t2s_map, src_emb, tgt_emb,
                                                                           s2t_pairs, t2s_pairs)
     del joint_proc_s2t_map, joint_proc_s2t_dico, joint_proc_t2s_map, joint_proc_t2s_dico
 
-    return {"s2t_nn": s2t_nn, "s2t_csls":s2t_csls, "t2s_nn": t2s_nn, "t2s_csls": t2s_csls,
-            "joint_s2t_nn": joint_s2t_nn, "joint_s2t_csls": joint_s2t_csls,
-            "joint_t2s_nn": joint_t2s_nn, "joint_t2s_csls": joint_t2s_csls}
+    return {"proc":proc_out,"joint": joint_out}
 
 
 
@@ -218,4 +216,4 @@ def evaluate(T_s2t, T_t2s, src_emb, tgt_emb, s2t_dict, t2s_dict):
     t2s_nn = utils.get_word_translation_accuracy(TranslatedY, src_emb, "nn", t2s_dict)
     t2s_csls = utils.get_word_translation_accuracy(TranslatedY, src_emb, "csls_knn_10", t2s_dict)
 
-    return s2t_nn, s2t_csls, t2s_nn, t2s_csls
+    return {"s2t_nn": s2t_nn, "s2t_csls": s2t_csls, "t2s_nn": t2s_nn, "t2s_csls": t2s_csls}
