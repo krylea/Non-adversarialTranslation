@@ -162,7 +162,7 @@ def _procrustes(src_emb, tgt_emb, mapping, pairs):
     return (U.mm(V.t()).type_as(W)).numpy()
 
 def procrustes(src_emb, tgt_emb, mapping, iters, dico=None):
-    dico = build_dictionary(src_emb, tgt_emb, mapping, "S2T") if dico is not None else dico
+    dico = build_dictionary(src_emb, tgt_emb, mapping, "S2T") if dico is None else dico
     for i in range(iters):
         mapping = _procrustes(src_emb, tgt_emb, mapping, dico)
         dico = build_dictionary(src_emb, tgt_emb, mapping, "S2T")
