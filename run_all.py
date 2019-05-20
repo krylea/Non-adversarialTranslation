@@ -6,7 +6,7 @@ import os
 
 def parse_args():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--total_runs', type=int, default=25)
+    parser.add_argument('--total_runs', type=int, default=5)
     parser.add_argument('--src_lang', type=str, default="en")
     parser.add_argument('--tgt_lang', type=str, default="es")
     parser.add_argument('--icp_init_epochs', type=int, default=100)
