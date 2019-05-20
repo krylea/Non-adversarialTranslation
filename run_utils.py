@@ -152,8 +152,8 @@ def _procrustes(src_emb, tgt_emb, mapping, pairs):
     Find the best orthogonal matrix mapping using the Orthogonal Procrustes problem
     https://en.wikipedia.org/wiki/Orthogonal_Procrustes_problem
     """
-    A = torch.Tensor(src_emb[pairs[:, 0]])
-    B = torch.Tensor(tgt_emb[pairs[:, 1]])
+    A = src_emb[pairs[:, 0]]
+    B = tgt_emb[pairs[:, 1]]
     W = mapping
     M = B.transpose(0, 1).mm(A)
     U, S, V = torch.svd(M)
