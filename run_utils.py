@@ -115,7 +115,6 @@ def build_dictionary(src_emb, tgt_emb, mapping, mode, bs=64, max_rank=15000, thr
 
 
     if mode == 'S2T':
-        mapping = torch.Tensor(mapping)
         s2t_vecs = src_emb.mm(mapping.t())
         tgt_vecs = tgt_emb.data
         s2t_vecs = s2t_vecs / s2t_vecs.norm(2, 1, keepdim=True).expand_as(s2t_vecs)
@@ -123,7 +122,6 @@ def build_dictionary(src_emb, tgt_emb, mapping, mode, bs=64, max_rank=15000, thr
         s2t_dico = _build_dictionary(s2t_vecs, tgt_vecs, mode=mode, bs=bs, **dico_kwargs)
         return s2t_dico
     elif mode == 'T2S':
-        mapping = torch.Tensor(mapping)
         t2s_vecs = tgt_emb.mm(mapping.t())
         src_vecs = src_emb.data
         t2s_vecs = t2s_vecs / t2s_vecs.norm(2, 1, keepdim=True).expand_as(t2s_vecs)
@@ -132,7 +130,6 @@ def build_dictionary(src_emb, tgt_emb, mapping, mode, bs=64, max_rank=15000, thr
         return t2s_dico
     elif mode == 'joint':
         s2t_mapping, t2s_mapping = mapping
-        s2t_mapping, t2s_mapping = torch.Tensor(s2t_mapping), torch.Tensor(t2s_mapping)
 
         s2t_dico = build_dictionary(src_emb, tgt_emb, s2t_mapping, 'S2T', **dico_kwargs)
         t2s_dico = build_dictionary(src_emb, tgt_emb, t2s_mapping, 'T2S', **dico_kwargs)
